@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const width = 8;
     const squares = [];
     let score = 0;
+    const scoreD = document.getElementById('score')
 
     /* setting the various images */
 const crushImgs = [
@@ -90,53 +91,30 @@ if (divIdbeingReplaced && validMove) {
    squares[divIdbeingDragged].style.backgroundColor = imgBeingDragged 
 } else squares[divIdbeingDragged].style.backgroundColor = imgBeingDragged
 }
-
-/* match checking */
-
-/* check for 3 */
 let boardWidth = width*width
 let boardLength = boardWidth;
 
-function checkRowForThree(){
-    let notValid = [];
-    for (let t = 1; t < width; t++) {
-        let a = (width*t) -1;
-        let b = (width*t) -2;
-        notValid.push(a);
-        notValid.push(b);
-        
-    } 
-    for ( i = 0; i < boardWidth-2; i++) {
-     let rowOfThree = [i, i+1, i+2]
-     let decidedImg = squares[i].style.backgroundColor
-     const isBlank =  squares[i].style.backgroundColor === ''
-    if (notValid.includes(i)) continue
-    
-    if (rowOfThree.every(index => squares[index].style.backgroundColor === decidedImg && !isBlank)) {
-        score += 3 
-        rowOfThree.forEach(index => {
-            squares[index].style.backgroundColor = ''
-        })
+/* add more rows */
+function moveDown(){
+    let firstRow = []
+    for (let i = 0; i < width; i++) {
+        firstRow.push(i);
+    }
+
+    for ( i = 0; i < boardWidth-width; i++) {
+        if (squares[i + width].style.backgroundColor === ''){
+            squares[i + width].style.backgroundColor = squares[i].style.backgroundColor;
+            squares[i].style.backgroundColor = '';
+            const isFirstRow = firstRow.includes(i);
+            if (isFirstRow && squares[i].style.backgroundColor === ''){
+                let randomImg = Math.floor(Math.random() * crushImgs.length);
+                squares[i].style.backgroundColor = crushImgs[randomImg]
+            }
+        }
     }
 }
 
-}
-
-function checkColumnForThree(){
-    for ( i = 0; i < boardLength-(width*2); i++) {
-     let columnOfThree = [i, i+width, i+width*2]
-     let decidedImg = squares[i].style.backgroundColor
-     const isBlank =  squares[i].style.backgroundColor === ''
-     
-     if (columnOfThree.every(index => squares[index].style.backgroundColor === decidedImg && !isBlank)) {
-        score += 3 
-        columnOfThree.forEach(index => {
-             squares[index].style.backgroundColor = ''
-         })
-     }
-    }
-
-}
+/* match checking */
 
 /* check for 4 */
 
@@ -158,7 +136,8 @@ function checkRowForFour(){
     if (notValid.includes(i)) continue
     
     if (rowOfFour.every(index => squares[index].style.backgroundColor === decidedImg && !isBlank)) {
-        score += 4 
+        score += 4
+        scoreD.innerHTML = score 
         rowOfFour.forEach(index => {
             squares[index].style.backgroundColor = ''
         })
@@ -166,15 +145,18 @@ function checkRowForFour(){
 }
 
 }
-
+checkRowForFour()
 function checkColumnForFour(){
-    for ( i = 0; i < boardLength-(width*2); i++) {
+    let fourWidth = (width*2)+1
+ 
+    for ( i = 0; i < boardLength-fourWidth; i++) {
      let columnOfFour = [i, i+width, i+width*2, i+width*3]
      let decidedImg = squares[i].style.backgroundColor
      const isBlank =  squares[i].style.backgroundColor === ''
      
      if (columnOfFour.every(index => squares[index].style.backgroundColor === decidedImg && !isBlank)) {
-        score += 4 
+        score += 4
+        scoreD.innerHTML = score
         columnOfFour.forEach(index => {
              squares[index].style.backgroundColor = ''
          })
@@ -182,8 +164,57 @@ function checkColumnForFour(){
     }
 
 }
+checkColumnForFour()
+
+/* check for 3 */
+
+function checkRowForThree(){
+    let notValid = [];
+    for (let t = 1; t < width; t++) {
+        let a = (width*t) -1;
+        let b = (width*t) -2;
+        notValid.push(a);
+        notValid.push(b);
+        
+    } 
+    for ( i = 0; i < boardWidth-2; i++) {
+     let rowOfThree = [i, i+1, i+2]
+     let decidedImg = squares[i].style.backgroundColor
+     const isBlank =  squares[i].style.backgroundColor === ''
+    if (notValid.includes(i)) continue
+    
+    if (rowOfThree.every(index => squares[index].style.backgroundColor === decidedImg && !isBlank)) {
+        score += 3
+        scoreD.innerHTML = score 
+        rowOfThree.forEach(index => {
+            squares[index].style.backgroundColor = ''
+        })
+    }
+}
+
+}
+checkRowForThree()
+function checkColumnForThree(){
+    for ( i = 0; i < boardLength-(width*2 -1); i++) {
+     let columnOfThree = [i, i+width, i+width*2]
+     let decidedImg = squares[i].style.backgroundColor
+     const isBlank =  squares[i].style.backgroundColor === ''
+     
+     if (columnOfThree.every(index => squares[index].style.backgroundColor === decidedImg && !isBlank)) {
+        score += 3
+        scoreD.innerHTML = score 
+        columnOfThree.forEach(index => {
+             squares[index].style.backgroundColor = ''
+         })
+     }
+    }
+
+}
+checkColumnForThree()
+
 
 window.setInterval(function(){
+    moveDown()
     checkRowForFour()
     checkColumnForFour()
     checkRowForThree()
