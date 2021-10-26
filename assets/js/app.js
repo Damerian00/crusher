@@ -145,15 +145,15 @@ function checkRowForFour(){
 }
 
 }
-checkRowForFour()
 function checkColumnForFour(){
-    let fourWidth = (width*2)+1
- 
+    
+    let fourWidth = (width*3)+1
     for ( i = 0; i < boardLength-fourWidth; i++) {
      let columnOfFour = [i, i+width, i+width*2, i+width*3]
      let decidedImg = squares[i].style.backgroundColor
      const isBlank =  squares[i].style.backgroundColor === ''
-     
+    //  if (notValid.includes(i)) continue
+
      if (columnOfFour.every(index => squares[index].style.backgroundColor === decidedImg && !isBlank)) {
         score += 4
         scoreD.innerHTML = score
@@ -164,7 +164,6 @@ function checkColumnForFour(){
     }
 
 }
-checkColumnForFour()
 
 /* check for 3 */
 
@@ -193,9 +192,8 @@ function checkRowForThree(){
 }
 
 }
-checkRowForThree()
 function checkColumnForThree(){
-    for ( i = 0; i < boardLength-(width*2 -1); i++) {
+    for ( i = 0; i < boardLength-(width*2 +1); i++) {
      let columnOfThree = [i, i+width, i+width*2]
      let decidedImg = squares[i].style.backgroundColor
      const isBlank =  squares[i].style.backgroundColor === ''
@@ -210,7 +208,6 @@ function checkColumnForThree(){
     }
 
 }
-checkColumnForThree()
 
 
 window.setInterval(function(){
