@@ -1,0 +1,24 @@
+:root{
+    
+    /*variables to change the size of the grid and boxes.
+    Grid size is based on how many boxes in a row or column times the size
+    of the boxes*/
+
+    --gHeight: 560px;
+    --gWidth: 560px;
+    --bHeight: 70px;
+    --bWidth: 70px;
+
+}
+
+.grid{
+    height: var(--gHeight);
+    width: var(--gWidth);
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.grid div{
+    width: var(--bWidth);
+    height:var(var(--bHeight));
+}
