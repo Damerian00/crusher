@@ -49,12 +49,9 @@ function dragStart () {
  divIdbeingDragged = parseInt(this.id);
 }
 
-function dragEnd () {
-    
-}
 
 function dragOver (e) {
-   e.preventDefault() 
+    e.preventDefault() 
 }
 
 function dragLeave () {
@@ -62,15 +59,36 @@ function dragLeave () {
 }
 
 function dragEnter (e) {
-   e.preventDefault() 
+    e.preventDefault() 
 }
 
 function dragDrop () {
     imgBeingReplaced = this.style.backgroundColor;
     divIdbeingReplaced = parseInt(this.id);
+    this.style.backgroundColor = imgBeingDragged
     squares[divIdbeingDragged].style.backgroundColor = imgBeingReplaced
 }
 
+function dragEnd () {
+    
+/* Define valid moves */
+let validMoves = [
+    divIdbeingDragged -1, 
+    divIdbeingDragged -width,
+    divIdbeingDragged +1,
+    divIdbeingDragged +width
+]
+
+let validMove = validMoves.includes(divIdbeingReplaced)
+
+if (divIdbeingReplaced && validMove) {
+    divIdbeingReplaced = null
+
+} else if (divIdbeingReplaced && !validMove) {
+   squares[divIdbeingReplaced].style.backgroundColor = imgBeingReplaced
+   squares[divIdbeingDragged].style.backgroundColor = imgBeingDragged 
+} else squares[divIdbeingDragged].style.backgroundColor = imgBeingDragged
+}
 
 
 })
