@@ -96,22 +96,24 @@ let boardLength = boardWidth;
 
 /* add more rows */
 function moveDown(){
-    let firstRow = []
+  
+  let firstRow = []
     for (let i = 0; i < width; i++) {
         firstRow.push(i);
     }
     for ( i = 0; i < boardWidth-width; i++) {
-        if (squares[i + width].style.backgroundImage === ''){
+        if (squares[i + width].style.backgroundImage === '') {
             squares[i + width].style.backgroundImage = squares[i].style.backgroundImage;
             squares[i].style.backgroundImage = '';
-            const isFirstRow = firstRow.includes(i);
-            if (isFirstRow && (squares[i].style.backgroundImage === '')){
-                let randomImg = Math.floor(Math.random() * crushImgs.length);
-                squares[i].style.backgroundImage = crushImgs[randomImg]
-            }
+        }
+        const isFirstRow = firstRow.includes(i);
+        if (isFirstRow && (squares[i].style.backgroundImage === '')){
+            let randomImg = Math.floor(Math.random() * crushImgs.length);
+            squares[i].style.backgroundImage = crushImgs[randomImg]
         }
     }
 }
+
 
 /* match checking */
 
@@ -269,5 +271,6 @@ window.setInterval(function(){
     checkColumnForThree()
     
 }, 100)
+
 
 })
