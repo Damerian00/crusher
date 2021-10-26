@@ -19,6 +19,8 @@ const crushImgs = [
 function makeBoard () {
     for (let i = 0; i < width*width; i++) {
         const div = document.createElement('div');
+        div.setAttribute('draggable', true);
+        div.setAttribute('id', i);
         let randomImg = Math.floor(Math.random() * crushImgs.length);
         div.style.backgroundColor = crushImgs[randomImg];
         grid.appendChild(div);
