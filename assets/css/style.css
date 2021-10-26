@@ -20,5 +20,5 @@
 
 .grid div{
     width: var(--bWidth);
-    height:var(var(--bHeight));
+    height:var(--bHeight);
 }
