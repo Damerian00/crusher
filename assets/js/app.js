@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const grid = document.querySelector('.grid');
     const width = 8;
     const squares = [];
+    let score = 0;
 
     /* setting the various images */
 const crushImgs = [
@@ -90,5 +91,56 @@ if (divIdbeingReplaced && validMove) {
 } else squares[divIdbeingDragged].style.backgroundColor = imgBeingDragged
 }
 
+/* match checking */
+let boardWidth = width*width
+let boardLength = boardWidth;
+
+function checkRowForThree(){
+    let notValid = [];
+    for (let t = 1; t < width; t++) {
+        let a = (width*t) -1;
+        let b = (width*t) -2;
+        notValid.push(a);
+        notValid.push(b);
+        
+    } 
+    console.log(notValid);
+    for ( i = 0; i < boardWidth-2; i++) {
+     let rowOfThree = [i, i+1, i+2]
+     let decidedImg = squares[i].style.backgroundColor
+     const isBlank =  squares[i].style.backgroundColor === ''
+    //  const notValid = [width, width -1, ];
+    if (notValid.includes(i)) continue
+    
+    if (rowOfThree.every(index => squares[index].style.backgroundColor === decidedImg && !isBlank)) {
+        score += 3 
+        rowOfThree.forEach(index => {
+            squares[index].style.backgroundColor = ''
+        })
+    }
+}
+
+}
+
+function checkColumnForThree(){
+    for ( i = 0; i < boardLength-(width*2); i++) {
+     let columnOfThree = [i, i+width, i+width*2]
+     let decidedImg = squares[i].style.backgroundColor
+     const isBlank =  squares[i].style.backgroundColor === ''
+     
+     if (columnOfThree.every(index => squares[index].style.backgroundColor === decidedImg && !isBlank)) {
+        score += 3 
+        columnOfThree.forEach(index => {
+             squares[index].style.backgroundColor = ''
+         })
+     }
+    }
+
+}
+
+window.setInterval(function(){
+    checkRowForThree()
+    checkColumnForThree()
+}, 100)
 
 })
