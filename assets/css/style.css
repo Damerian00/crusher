@@ -10,8 +10,11 @@
     --bWidth: 70px;
 
 }
+* {
+  margin: 0;  
+}
 .grid-container{
-    margin: 5vh auto;
+    margin: 2vh auto;
 }
 
 .grid{
@@ -28,8 +31,8 @@
 .selection{
     background-color: green;
     width: 1000px;
-    height: 90vh;
-    /* position: absolute; */
-    top: 0;
+    height: 75vh;
     display: block;
+    margin: 2vh auto;
+    transition: opacity 1s;
 }

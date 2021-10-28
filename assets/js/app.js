@@ -23,9 +23,17 @@ const crushImgs = [
 ]
 
 /* take in selection */
-startBtn.addEventListener('click' , init);
+startBtn.addEventListener('click' , () => {
+    selection.style.opacity = 0;
+    selection.addEventListener('transitionend', () => {
+        selection.remove()
+        init()
+    
+    });
+});
 
 function init() {
+    
    if (tblWidth.value === "8"){
        width = 8;
 
@@ -38,8 +46,8 @@ function init() {
    document.querySelector('.grid-container').style.width = newWidth + "px";
    grid.style.width = newWidth + "px";
    grid.style.height = newWidth + "px";
-   makeBoard();
    
+   makeBoard();
 }
 
 
