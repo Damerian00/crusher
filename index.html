@@ -12,7 +12,22 @@
     <aside class="scoreBoard">
         <h3>Score:</h3>
         <h1 id="score"></h1>
+        
     </aside>
-    <main class="grid"></main>
+    <main class="grid-container">
+        <div class="grid"></div>
+    </main>
+    <aside class ="selection">
+        <form>
+            <label>Choose how many rows you would like to have.</label>
+            <select name="tableWidth" id="width">
+                <option value="8">8 squares</option>
+                <option value="10">10 squares</option>
+                <option value="12">12 squares</option>
+            </select>
+
+        </form>
+        <button id="startBtn">Start Crushing</button>
+    </aside>
 </body>
 </html>

@@ -10,10 +10,12 @@
     --bWidth: 70px;
 
 }
+.grid-container{
+    margin: 5vh auto;
+}
 
 .grid{
-    height: var(--gHeight);
-    width: var(--gWidth);
+
     display: flex;
     flex-wrap: wrap;
     background-color: black;
@@ -22,4 +24,12 @@
 .grid div{
     width: var(--bWidth);
     height:var(--bHeight);
+}
+.selection{
+    background-color: green;
+    width: 1000px;
+    height: 90vh;
+    /* position: absolute; */
+    top: 0;
+    display: block;
 }

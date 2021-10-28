@@ -1,10 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     const grid = document.querySelector('.grid');
-    const width = 8;
+    let width;
     const squares = [];
     let score = 0;
-    const scoreD = document.getElementById('score')
-
+    const scoreD = document.getElementById('score');
+    const startBtn = document.getElementById('startBtn');
+    let timerId = 0;
+    const scoreBd = document.querySelector('.scoreBoard');
+    const tblWidth = document.getElementById('width');
+    let boardWidth;
+    let boardLength;
+    const selection = document.querySelector('.selection');
+    
     /* setting the various images */
 const crushImgs = [
     'url(./assets/images/desert.png)',
@@ -15,10 +22,32 @@ const crushImgs = [
     'url(./assets/images/redcaveStick.png)'
 ]
 
+/* take in selection */
+startBtn.addEventListener('click' , init);
+
+function init() {
+   if (tblWidth.value === "8"){
+       width = 8;
+
+   } else if (tblWidth.value === "10"){
+       width = 10;
+   } else {
+       width = 12;
+   }
+   let newWidth = width*70;
+   document.querySelector('.grid-container').style.width = newWidth + "px";
+   grid.style.width = newWidth + "px";
+   grid.style.height = newWidth + "px";
+   makeBoard();
+   
+}
+
 
  /* Creating the board */
 
 function makeBoard () {
+    timerId = 1;
+    boardWidth = width*width
     for (let i = 0; i < width*width; i++) {
         const div = document.createElement('div');
         div.setAttribute('draggable', true);
@@ -29,9 +58,14 @@ function makeBoard () {
         squares.push(div);
         
     }
-
+    squares.forEach(div => div.addEventListener('dragstart', dragStart));
+    squares.forEach(div => div.addEventListener('dragend', dragEnd));
+    squares.forEach(div => div.addEventListener('dragover', dragOver));
+    squares.forEach(div => div.addEventListener('dragleave', dragLeave));
+    squares.forEach(div => div.addEventListener('dragenter', dragEnter));
+    squares.forEach(div => div.addEventListener('drop', dragDrop));
 }
-makeBoard()
+
 
 /* dragging images */
 let imgBeingDragged;
@@ -39,12 +73,7 @@ let imgBeingReplaced;
 let divIdbeingDragged;
 let divIdbeingReplaced
 
-squares.forEach(div => div.addEventListener('dragstart', dragStart));
-squares.forEach(div => div.addEventListener('dragend', dragEnd));
-squares.forEach(div => div.addEventListener('dragover', dragOver));
-squares.forEach(div => div.addEventListener('dragleave', dragLeave));
-squares.forEach(div => div.addEventListener('dragenter', dragEnter));
-squares.forEach(div => div.addEventListener('drop', dragDrop));
+
 
 function dragStart () {
  imgBeingDragged = this.style.backgroundImage;
@@ -91,12 +120,10 @@ if (divIdbeingReplaced && validMove) {
    squares[divIdbeingDragged].style.backgroundImage = imgBeingDragged 
 } else squares[divIdbeingDragged].style.backgroundImage = imgBeingDragged
 }
-let boardWidth = width*width
-let boardLength = boardWidth;
+
 
 /* add more rows */
 function moveDown(){
-  
   let firstRow = []
     for (let i = 0; i < width; i++) {
         firstRow.push(i);
@@ -120,6 +147,7 @@ function moveDown(){
 /* check for 5 */
 
 function checkRowForFive(){
+    
     let notValid = [];
     for (let t = 1; t < width; t++) {
         let a = (width*t) -1;
@@ -149,7 +177,7 @@ function checkRowForFive(){
 
 }
 function checkColumnForFive(){
-    
+    boardLength = boardWidth;
     let fiveWidth = (width*4)+1
     for ( i = 0; i < boardLength-fiveWidth; i++) {
      let columnOfFive = [i, i+width, i+width*2, i+width*3]
@@ -198,7 +226,7 @@ function checkRowForFour(){
 
 }
 function checkColumnForFour(){
-    
+    boardLength = boardWidth;
     let fourWidth = (width*3)+1
     for ( i = 0; i < boardLength-fourWidth; i++) {
      let columnOfFour = [i, i+width, i+width*2, i+width*3]
@@ -244,6 +272,7 @@ function checkRowForThree(){
 
 }
 function checkColumnForThree(){
+    boardLength = boardWidth;
     for ( i = 0; i < boardLength-(width*2 +1); i++) {
      let columnOfThree = [i, i+width, i+width*2]
      let decidedImg = squares[i].style.backgroundImage
@@ -261,7 +290,18 @@ function checkColumnForThree(){
 }
 
 
-window.setInterval(function(){
+
+// startBtn.addEventListener('click' , () => {
+//     if (timerId) {
+//         clearInterval(timerId)
+//         timerId = null
+//     } else {
+//        timerId = true
+//     }
+
+// })
+window.setInterval(() =>{
+
     moveDown()
     checkRowForFive()
     checkColumnForFive()
@@ -269,8 +309,14 @@ window.setInterval(function(){
     checkColumnForFour()
     checkRowForThree()
     checkColumnForThree()
-    
+   
 }, 100)
+
+
+
+
+
+
 
 
 })
