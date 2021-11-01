@@ -52,7 +52,8 @@ function init() {
    } else if (diff.value === "2"){
        t = 45;
    } else {
-       t = 30;
+    //    t = 30;
+        t = 3;
    }
   
 
@@ -349,6 +350,9 @@ function GameOver () {
     while (grid.firstChild) {
         grid.removeChild(grid.firstChild);
     }
+    grid.style.backgroundImage = "url(./assets/images/spaceBg.jpg)";
+    grid.style.backgroundRepeat = "no-repeat";
+    grid.style.backgroundSize = "cover";
     let h1 = document.createElement('h1');
     h1.setAttribute('class', 'gameOver');
     h1.innerHTML = `Game Over you scored: ${score} points. Would you like to play again?`;
