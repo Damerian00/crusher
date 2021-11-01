@@ -10,9 +10,12 @@
 </head>
 <body>
     <aside class="scoreBoard">
-        <h3>Score:</h3>
-        <h1 id="score"></h1>
-        
+        <h3>Score: </h3>
+        <h1 id="score"></h1>        
+    </aside>
+    <aside class = "timerBoard">
+        <h3>Time: </h3>
+        <h1 id = "timer"></h1>
     </aside>
     <main class="grid-container">
         <div class="grid"></div>
@@ -26,14 +29,13 @@
                 <option value="12">12 squares</option>
             </select>
             <label>Choose Your Difficulty.</label>
-            <select name="difficulty" id="time">
-                <option value="8">Novice</option>
-                <option value="10">Adept</option>
-                <option value="12">Master</option>
+            <select name="tieAmount" id="diff">
+                <option value="3">Novice</option>
+                <option value="2">Adept</option>
+                <option value="1">Master</option>
             </select>
-
+            <button id="startBtn">Start Crushing</button>
         </form>
-        <button id="startBtn">Start Crushing</button>
     </aside>
 </body>
 </html>

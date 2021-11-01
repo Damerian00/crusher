@@ -14,7 +14,8 @@
   margin: 0;  
 }
 .grid-container{
-    margin: 2vh auto;
+    margin: 5vh auto;
+    position: relative;
 }
 
 .grid{
@@ -29,10 +30,50 @@
     height:var(--bHeight);
 }
 .selection{
-    background-color: green;
-    width: 1000px;
-    height: 75vh;
+    background: url(../images/inaCave.jpg) no-repeat;
+    width: 640px;
+    height: 80vh;
     display: block;
-    margin: 2vh auto;
+    margin: 5vh auto;
     transition: opacity 1s;
+    color: white;
+}
+
+.selection form {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin: 0 auto;
+}
+
+.selection label{
+    margin-top: 2vh;
+    font-size: 2rem;
+}
+.selection select{
+    margin: 2rem;
+}
+#startBtn {
+
+}
+.scoreBoard {
+   opacity: 0;
+   margin: 2vh 3rem;
+}
+.timerBoard {
+    opacity: 0;
+    position: absolute;
+    right: 2vw;
+}
+.gameOver {
+    color: red;
+    margin: 5vh 2rem;
+    width: 100%;
+}
+#newGame{
+    margin: 2vh auto;
+    width: 50%;
+    font-size: 2rem;
+    border-radius: 34px;
+    cursor: pointer;
 }

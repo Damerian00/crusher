@@ -5,9 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let score = 0;
     const scoreD = document.getElementById('score');
     const startBtn = document.getElementById('startBtn');
-    let timerId = 0;
+    let timerId;
     const scoreBd = document.querySelector('.scoreBoard');
+    const timeBd = document.querySelector('.timerBoard');
     const tblWidth = document.getElementById('width');
+    const diff = document.getElementById('diff')
     let boardWidth;
     let boardLength;
     const selection = document.querySelector('.selection');
@@ -23,7 +25,9 @@ const crushImgs = [
 ]
 
 /* take in selection */
-startBtn.addEventListener('click' , () => {
+startBtn.addEventListener('click' , (e) => {
+    e.preventDefault();
+    
     selection.style.opacity = 0;
     selection.addEventListener('transitionend', () => {
         selection.remove()
@@ -33,28 +37,56 @@ startBtn.addEventListener('click' , () => {
 });
 
 function init() {
-    
+    let t;
    if (tblWidth.value === "8"){
        width = 8;
 
    } else if (tblWidth.value === "10"){
-       width = 10;
+      width = 10;
    } else {
-       width = 12;
+       width = 12
    }
+  if (diff.value === "3"){
+       t = 60;
+
+   } else if (diff.value === "2"){
+       t = 45;
+   } else {
+       t = 30;
+   }
+  
+
    let newWidth = width*70;
    document.querySelector('.grid-container').style.width = newWidth + "px";
    grid.style.width = newWidth + "px";
    grid.style.height = newWidth + "px";
-   
+   countDown(t);
    makeBoard();
 }
 
+/* setUp countDownTimer */
+function countDown(t) {
+    timerId = t;
+    let timerEl = document.getElementById('timer');
+    let timeInterval = setInterval(function () {
+        if (timerId <= 10){
+            timerEl.style.color = "red";
+        }
+      if (timerId >= 1) {
+        timerEl.textContent = timerId + ' seconds remaining';
+        timerId--;
+      } else {
+        
+        timerEl.textContent = 'Game Over';
+        clearInterval(timeInterval);
+        GameOver();
+      }
+    }, 1000);
+  }
 
  /* Creating the board */
 
 function makeBoard () {
-    timerId = 1;
     boardWidth = width*width
     for (let i = 0; i < width*width; i++) {
         const div = document.createElement('div');
@@ -72,6 +104,9 @@ function makeBoard () {
     squares.forEach(div => div.addEventListener('dragleave', dragLeave));
     squares.forEach(div => div.addEventListener('dragenter', dragEnter));
     squares.forEach(div => div.addEventListener('drop', dragDrop));
+    scoreBd.style.opacity = 1;
+    timeBd.style.opacity = 1;
+    
 }
 
 
@@ -298,18 +333,8 @@ function checkColumnForThree(){
 }
 
 
-
-// startBtn.addEventListener('click' , () => {
-//     if (timerId) {
-//         clearInterval(timerId)
-//         timerId = null
-//     } else {
-//        timerId = true
-//     }
-
-// })
 window.setInterval(() =>{
-
+if (timerId > 0){
     moveDown()
     checkRowForFive()
     checkColumnForFive()
@@ -317,14 +342,23 @@ window.setInterval(() =>{
     checkColumnForFour()
     checkRowForThree()
     checkColumnForThree()
-   
+}
 }, 100)
 
+function GameOver () {
+    while (grid.firstChild) {
+        grid.removeChild(grid.firstChild);
+    }
+    let h1 = document.createElement('h1');
+    h1.setAttribute('class', 'gameOver');
+    h1.innerHTML = `Game Over you scored: ${score} points. Would you like to play again?`;
+    grid.appendChild(h1);
+    btn = document.createElement('button');
+    btn.setAttribute('id' , 'newGame');
+    btn.innerHTML = "Start over"
+    grid.appendChild(btn);
 
-
-
-
-
-
+    btn.addEventListener('click' , ()=> {location.reload()}) 
+}
 
 })
